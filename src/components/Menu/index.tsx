@@ -38,16 +38,31 @@ const MenubarDemo: React.FC<{
     const helper = useMemo(() => new Helper(editor), [editor])
     const { current, changeLanguage, languagList } = useLanguageSelect()
 
+
+    const receiveMessage = (event: any) => {
+        // if (event.origin !== 'http://example.com') // replace with your iframe's origin
+        //     return;
+        console.log('open post sd server / Received message: ', JSON.stringify(event))
+    }
+
     useEffect(() => {
+
+        window.addEventListener('message', receiveMessage, false);
+
         const show = (data: { mouseX: number; mouseY: number }) => {
             ShowContextMenu({ ...data, editor, onChangeBackground })
         }
         editor?.ContextMenuEventManager.AddEventListener(show)
+
+
         return () => {
-            editor?.ContextMenuEventManager.RemoveEventListener(show)
+            editor?.ContextMenuEventManager.RemoveEventListener(show);
+
+            window.removeEventListener('message', receiveMessage);
         }
     }, [editor])
 
+   
     return (
         <Menubar.Root className={MenubarRoot} style={style}>
             <Menubar.Menu>
@@ -394,6 +409,8 @@ const MenubarDemo: React.FC<{
                     className={classNames(MenubarTrigger, Blue)}
                     onClick={async () => {
                         const image = editor.MakeImages()
+                        console.log('Generate image===', image);
+
                         const result = Object.fromEntries(
                             Object.entries(image).map(([name, imgData]) => [
                                 name,
@@ -403,6 +420,15 @@ const MenubarDemo: React.FC<{
                                 },
                             ])
                         )
+                        console.log('Generate result===', result)
+                        console.log('VITE_CONNECT_SERVER_URL===',  import.meta.env.VITE_CONNECT_SERVER_URL)
+                        
+
+                        // 页面被嵌套了，向父窗口进行通信
+                        if(window.self != window.parent) {
+                            console.log('post message ....')
+                            window.parent.postMessage(JSON.stringify(result), import.meta.env.VITE_CONNECT_SERVER_URL)
+                        }
                         onScreenShot(result)
                     }}
                 >
