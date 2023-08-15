@@ -119,7 +119,7 @@ const config: UserConfigFn = ({ command, mode, ssrBuild }) => {
             __APP_BUILD_TIME__: Date.now(),
         },
         build: {
-            assetsDir: mode === 'singlefile' ? '.' : 'assets',
+            assetsDir: (mode === 'singlefile' || mode === 'prod') ? '.' : 'assets',
             emptyOutDir: true,
         },
         plugins: [

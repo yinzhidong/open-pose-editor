@@ -1,0 +1,10 @@
+*.md
+.git
+script
+dist
+docs
+.vscode
+.chat
+Pipfile
+Pipfile.lock
+*.css
