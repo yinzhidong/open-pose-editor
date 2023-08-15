@@ -42,3 +42,6 @@ https://user-images.githubusercontent.com/18410894/224073965-c782a05f-0a20-41cf-
 Email: 891085309@qq.com
 
 [Tencent QQ Group](https://jq.qq.com/?_wv=1027&k=N6j4nigd)：272950545
+
+
+https://pnpm.io/zh/docker

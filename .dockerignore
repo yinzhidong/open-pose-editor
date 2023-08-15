@@ -1,10 +1,14 @@
 *.md
 .git
 script
-dist
 docs
 .vscode
 .chat
 Pipfile
 Pipfile.lock
 *.css
+.gitpod.yml
+
+node_modules
+.git
+.gitignore
