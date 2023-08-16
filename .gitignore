@@ -187,3 +187,4 @@ cython_debug/
 # Custom
 /stats.html
 .pnpm-store/
+package-lock.json
